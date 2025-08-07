@@ -1,7 +1,7 @@
 import React from "react";
 import farmer from "../assets/farmer.jpg";
 import consumer from "../assets/consumer.png";
-import logo from "../assets/FreshPick.png";
+import logo from "../assets/Freshpick.png";
 function About() {
   return (
     <div className="pb-5">
