@@ -6,12 +6,28 @@ import authRouters from "./routers/auth.router.js";
 import cartItems from "./routers/cart.router.js";
 import productupload from "./routers/product.router.js";
 import cors from "cors";
+import { error } from "console";
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://fresh-pick-e-comm.vercel.app",
+];
 const app = express();
 dotenv.config();
 const PORT = process.env.PORT || 7283;
 
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CoRs"));
+      }
+    },
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 app.use("/auth", authRouters);
