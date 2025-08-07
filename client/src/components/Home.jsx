@@ -36,7 +36,7 @@ function Home() {
   return (
     <div className="h-auto  w-full lg:w-[calc(100dvw-1rem)] border-0 border-black mx-1 mt-4 bg-gray-100 m-3">
       <div
-        className="relative overflow-hidden  h-120  md:h-[400px] lg:h-[370px] xl:h-[500px]
+        className="relative overflow-hidden  h-120  md:h-[400px] lg:h-[370px] 
           w-[calc(100dvw-1rem)]
           bg-teal-900 
           rounded-t-2xl 
@@ -44,7 +44,7 @@ function Home() {
         "
       >
         <div
-          className=" relative h-[300px] sm:h-[350px] md:h-[400px] lg:h-[400px] xl:h-[500px]
+          className=" relative h-[300px] sm:h-[350px] md:h-[400px] lg:h-[100px] 
           w-[calc(100dvw-1rem)] "
         >
           <div className="h-[90%] w-[40%] ml-10 mt-0 border-0 border-black">
