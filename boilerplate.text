@@ -1,0 +1,66 @@
+
+Front-end:
+→ npm create vite@latest . --template react 
+→ npm i tailwindcss @tailwindcss/vite
+→ import tailwind in vite.config and plugin it
+→ import tailwindcss in app.js (at top)
+
+
+Back-end:
+→ npm init -y( create package.json)
+→ Create all dependncis which u need (express,mongoose,dotenv,bcryptjs,jsonwebtoken,cors)
+→ Create a server.js or index.js (main bakcend page)
+→ npm install --save-dev nodemon(automatically restarts your server )
+→ Change Script to "dev": "nodemon server.js" and main: server.js
+ both should be same either index.js or server.js
+
+server/
+├── config/                # Configuration files (e.g., DB connection)
+│
+├── controllers/           # Handles business logic for routes
+│  
+├── models/               # Mongoose schemas for MongoDB collections
+│
+├── routes/               # Route definitions, mapping URLs to controllers
+│
+├── middleware/          # Middleware functions for request(eg:JWT verification)
+│
+├── .env                  # Environment variables (e.g., MONGODB_URI, PORT)
+├── index.js              # Entry point – initializes app and starts server
+├── package.json          # Project metadata, dependencies, and scripts
+
+
+
+DataBase:
+Craete a file Dbconnect and create a asyn export function of that and create TRy catch block to handle db state of connection (fail or success). 
+import that function to main page index.js and call the function.
+
+Add image in db:
+ Create input as type=file and make e.target.files[0] at handlechange so it can handle image which is uploaded recently and it's sended to backend there we have to create a upload folder and make sure to app.use("/uploads", express.static("uploads")); this will accept the files from front end create a multer and set destinationa and file name in that and make to save at upload after that at upload api route || router.post("/upload", verifyToken, upload.single("photo"), Uploadcontroller); \\
+ 
+ 
+Separate Product Details Fetching Flow:
+
+→ First, create a backend controller that searches for a product using its id.
+→ When a user clicks on a product, it redirects to a new page with the current product’s id in the URL using <Link to={/product/${product._id}}>.
+→ In the new page, const { id } = useParams(); captures the product id from the URL.
+→ This id is used in an Axios GET request to fetch the product from the backend (/product/:id).
+→ The request hits the backend controller, which finds the product using findById.
+→ If the product is found, it responds with the data; otherwise, it returns an error message.
+
+
+
+Write Review:
+→ We have to upload image and video to it input type should be type="file" and accept should be image/* // video/*
+→ setVideo of image it could comes from e.target.files[0] files is a in-built function which stores the fileList of all uploaded images in input same for video also.
+→Create state to these things to send them to backend through the zustand now create a api in zustand and import it in this these and assign the data u want to share to backend dont forget this 
+ headers: {
+          "Content-Type": "multipart/form-data",
+        },
+
+
+→ IN the backend Create a multer to store vidoe and image and accept those  images in API-controller.
+→ Create a folder to store the front end data name of folder should be as it   is  mentioned in multer destination. 
+→ Dont forget to set multer acceptance of image  at API Router 
+also to accept images and store this is mandatory 
+ app.use("/ReviewIV", express.static("ReviewIV"));
