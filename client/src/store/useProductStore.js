@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 import axios from "axios";
 import toast from "react-hot-toast";
-const API_URL = "http://localhost:5000";
+
 axios.defaults.withCredentials = true;
 export const useProductStore = create((set) => ({
   products: [],
@@ -11,7 +11,9 @@ export const useProductStore = create((set) => ({
   fetchProducts: async () => {
     set({ isLoading: true });
     try {
-      const res = await axios.get(`${API_URL}/product/fetchall`);
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/product/fetchall`
+      );
       set({ products: res.data });
     } catch (err) {
       console.error("Error fetching products:", err);
@@ -20,5 +22,4 @@ export const useProductStore = create((set) => ({
       set({ isLoading: false });
     }
   },
-  
 }));

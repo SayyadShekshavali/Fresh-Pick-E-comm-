@@ -1,8 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
 import toast from "react-hot-toast";
-
-const API_URL = "http://localhost:5000";
 axios.defaults.withCredentials = true;
 export const userProductupload = create((set) => ({
   isUploading: false,
@@ -17,12 +15,16 @@ export const userProductupload = create((set) => ({
     formData.append("description", description);
 
     try {
-      const res = await axios.post(`${API_URL}/product/upload`, formData, {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/product/upload`,
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       toast.success("Product uploaded");
       console.log("Upload success:", res.data);
     } catch (error) {
@@ -34,7 +36,9 @@ export const userProductupload = create((set) => ({
   },
   FetchProductDetails: async (id) => {
     try {
-      const res = await axios.get(`${API_URL}/product/${id}`);
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/product/${id}`
+      );
       set({ productDetails: res.data.product, Review: res.data.review });
       toast.success("Product Details");
       return {
@@ -59,7 +63,7 @@ export const WriteReviewStore = create(() => ({
     if (Video) formData.append("Video", Video);
     try {
       const res = await axios.post(
-        `${API_URL}/product/${id}/review`,
+        `${import.meta.env.VITE_API_URL}/product/${id}/review`,
         formData,
         {
           withCredentials: true,
