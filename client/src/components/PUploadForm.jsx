@@ -69,8 +69,8 @@ function PUploadForm() {
   };
 
   return (
-    <div className="relative  border border-black h-auto w-[calc(100dvw-1rem)] ">
-      <div className="flex items-center justify-center h-full w-full ">
+    <div className="relative  border-0 border-black h-auto w-[calc(100dvw-1rem)] mb-20">
+      <div className="flex items-center justify-center h-full w-full m-6">
         {user ? (
           <form
             onSubmit={handleSubmit}

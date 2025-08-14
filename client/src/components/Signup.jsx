@@ -54,8 +54,8 @@ export function Signup() {
   };
 
   return (
-    <div className="min-h-screen  ">
-      <div className="w-[calc(100dvw-50rem)] mt-1 ml-5  flex flex-col justify-center items-center p-4 sm:p-12 border-1 border-black rounded-3xl h-150">
+    <div className="h-180 flex justify-center items-center mb-10  ">
+      <div className="lg:w-[calc(100dvw-50rem)] md:w-[calc(100dvw-15rem)] mt-1 ml-5  flex flex-col justify-center items-center p-4 sm:p-12 border-1 border-black rounded-3xl ">
         <div className="w-full max-w-wd space-y-10 ">
           {/** LOGO*/}
           <div className="text-center mb-8">

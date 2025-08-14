@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { CartStore } from "../store/CartStore";
 import { useAuthStore } from "../store/useAuthstore.js";
+import { Payment } from "../store/payment.js";
 function Cart() {
   const { user } = useAuthStore();
   const { FetchCartItems } = CartStore();
   const [cartItems, setCartItems] = useState([]);
+  const { PaymentS } = Payment();
+  const [form, setForm] = useState({
+    Houseno: "",
+    Landmark: "",
+    City: "",
+    Pincode: "",
+  });
   useEffect(() => {
     const fetchData = async () => {
       const items = await FetchCartItems({ UserId: user._id });
@@ -17,9 +25,33 @@ function Cart() {
     if (!product) return total;
     return total + product.price * item.quantity;
   }, 0);
+  const checkValidations = async () => {
+    if (
+      !form.Houseno?.trim() ||
+      !form.City?.trim() ||
+      !form.Landmark?.trim() ||
+      !/^\d{6}$/.test(form.Pincode)
+    ) {
+      alert("Invalid Address details");
+    }
+    console.log(
+      `House No: ${form.Houseno}, City: ${form.City}, Landmark: ${form.Landmark}, Pincode: ${form.Pincode}`
+    );
+    try {
+      const clienSecret = await PaymentS({
+        amount: Math.round(cartTotal * 100),
+      });
+    } catch (error) {
+      console.error("Error creating payment", error);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
   return (
     <div>
-      
       <h1
         style={{ textShadow: "2px 4px 5px rgba(0, 0, 0, 0.3)" }}
         className="text-center m-10 font-bold "
@@ -64,8 +96,76 @@ function Cart() {
           Grand Total: ${cartTotal.toFixed(2)}
         </p>
       </div>
+      <div className="flex flex-col justify-center items-center  ">
+        <p className="text-center text-2xl font-bold">Adress details </p>
+        <form
+          action="Submit"
+          className="flex flex-col justify-start items-start gap-4 m-10"
+        >
+          <div className="flex flex-row items-center gap-2">
+            <label className="lg:text-xl text-sm" htmlFor="houseno">
+              House No:{" "}
+            </label>
+            <input
+              id="houseno"
+              value={form.Houseno}
+              onChange={handleChange}
+              name="Houseno"
+              className="h-9 lg:w-90 w-45 border-1 border-black rounded-xl p-4 "
+              type="text"
+            />
+          </div>
+
+          <div className="flex flex-row items-center gap-2">
+            <label className="lg:text-xl text-sm" htmlFor="landmark">
+              Landmark:
+            </label>
+            <input
+              id="landmark"
+              value={form.Landmark}
+              onChange={handleChange}
+              name="Landmark"
+              className="h-9 lg:w-90 w-45 border-1 border-black rounded-xl p-4"
+              type="text"
+            />
+          </div>
+
+          <div className="flex flex-row items-center gap-2">
+            <label className="lg:text-xl text-sm" htmlFor="city">
+              City/Place:
+            </label>
+            <input
+              id="city"
+              name="City"
+              value={form.City}
+              onChange={handleChange}
+              className="h-9 lg:w-90 w-45 border-1 border-black rounded-xl !text-black p-4 "
+              type="text"
+            />
+          </div>
+
+          <div className="flex flex-row items-center gap-2">
+            <label className="lg:text-xl text-sm" htmlFor="pinCode">
+              Pin Code:
+            </label>
+            <input
+              id="pinCode"
+              value={form.Pincode}
+              onChange={handleChange}
+              name="Pincode"
+              className="h-9 lg:w-90 w-45 border-1 border-black rounded-xl p-4 text-black"
+              type="number"
+            />
+          </div>
+        </form>
+      </div>
       <div className="flex justify-center items-center ">
-        <button className="px-4 py-2 !bg-teal-600 text-black rounded-xl">
+        <button
+          onClick={() => {
+            checkValidations();
+          }}
+          className="px-4 py-2 !bg-teal-600 text-black rounded-xl"
+        >
           Buy it now
         </button>
       </div>

@@ -15,8 +15,8 @@ function Search() {
   }, [name]);
   console.log(product);
   return (
-    <div>
-      <h1 className="text-center ">Search</h1>
+    <div className="h-120 ">
+      <h1 className="text-center m-10 ">Search for product</h1>
       <div className="flex justify-center align-center  m-3">
         <input
           type="text"
@@ -24,7 +24,7 @@ function Search() {
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Search for Product"
-          className="p-1 rounded-xl border-none h-10 w-100"
+          className="p-5 rounded-xl border-2 border-black h-10 w-100"
         />
       </div>
       <div>

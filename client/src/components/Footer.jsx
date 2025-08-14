@@ -10,7 +10,7 @@ function Footer() {
         <div className="flex-col justify-center items-center lg:m-6 m-4">
           <img
             src={logo}
-            className="lg:h-15 lg:w-15 w-10 h-10 ml-10 rounded-full"
+            className="lg:h-15 lg:w-15 w-10 h-10 ml-10 rounded-full m-5"
           />
           <div className="flex ">
             <Mail className="lg:h-6 lg:w-6 h-4 w-4 " />{" "}
