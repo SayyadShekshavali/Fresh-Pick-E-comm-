@@ -63,12 +63,13 @@ export const CartStore = create(() => ({
       toast.error("Failed to load products");
     }
   },
-  Itemdel: async (id) => {
-    console.log(id);
+  Itemdel: async (userId, productId) => {
+    console.log("Product_id:", productId);
+    console.log("User_id", userId);
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}/cart/itemdelete`,
-        { id }
+        { userId, productId }
       );
       if (res.data.success) {
         toast.success("Deleted an Items from card");

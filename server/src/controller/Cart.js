@@ -63,15 +63,22 @@ export const FetchCartItems = async (req, res) => {
 
 export const DeleteItems = async (req, res) => {
   try {
-    const { id } = req.body;
-    const isPresent = await CartItems.findById(id);
-    if (!isPresent) {
-      res.status(404).json({ message: "Product not found" });
+    const { userId, productId } = req.body;
+    const user = await CartItems.findOne({ userId });
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Cart not found" });
     }
-    await CartItems.findByIdAndDelete(id);
-    return res
-      .status(200)
-      .json({ success: true, message: "Item deleted successfully" });
+    const update = await CartItems.findOneAndUpdate(
+      { userId },
+      { $pull: { items: { productId } } },
+      { new: true }
+    );
+    return res.status(200).json({
+      message: "Item deleted successfully",
+      cart: update,
+    });
   } catch (error) {
     console.error("Error deleting item:", error);
     return res.status(500).json({ success: false, message: "Server error" });
