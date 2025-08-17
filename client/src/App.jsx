@@ -14,30 +14,35 @@ import Cart from "./components/Cart";
 import Search from "./components/Search";
 import About from "./components/About";
 import Footer from "./components/Footer";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+const stripePromise = loadStripe(import.meta.env.VITE_PUBLISHABLE_KEY);
 function App() {
   const { user, isSigningUp, isLoggingIn } = useAuthStore();
   return (
     <div className="  w-dvw border-0 border-black overflow-hidden">
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Navigate to="/home" />} />
-          <Route path="/home" element={!user ? <Signup /> : <Home />} />
-          <Route
-            path="/signup"
-            element={isSigningUp ? <Navigate to="/login" /> : <Signup />}
-          />
-          <Route path="/login" element={isLoggingIn ? <Home /> : <Login />} />
-          <Route path="/upload" element={<PUploadForm />} />
-          <Route path="/product/:id" element={<PDetails />} />
-          <Route path="/product/:id/write" element={<WriteReview />} />
-          <Route path="/Cart" element={<Cart />} />
-          <Route path="/Search" element={<Search />} />
-          <Route path="/About" element={<About />} />
-        </Routes>
-        <Footer />
-        <Toaster />
-      </BrowserRouter>
+      <Elements stripe={stripePromise}>
+        <BrowserRouter>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Navigate to="/home" />} />
+            <Route path="/home" element={!user ? <Signup /> : <Home />} />
+            <Route
+              path="/signup"
+              element={isSigningUp ? <Navigate to="/login" /> : <Signup />}
+            />
+            <Route path="/login" element={isLoggingIn ? <Home /> : <Login />} />
+            <Route path="/upload" element={<PUploadForm />} />
+            <Route path="/product/:id" element={<PDetails />} />
+            <Route path="/product/:id/write" element={<WriteReview />} />
+            <Route path="/Cart" element={<Cart />} />
+            <Route path="/Search" element={<Search />} />
+            <Route path="/About" element={<About />} />
+          </Routes>
+          <Footer />
+          <Toaster />
+        </BrowserRouter>
+      </Elements>
     </div>
   );
 }

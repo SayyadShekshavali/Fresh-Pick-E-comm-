@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import { CartStore } from "../store/CartStore";
 import { useAuthStore } from "../store/useAuthstore.js";
 import { Payment } from "../store/payment.js";
+import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
+
 function Cart() {
+  const { Itemdel } = CartStore();
+  const stripe = useStripe();
+  const elements = useElements();
   const { user } = useAuthStore();
   const { FetchCartItems } = CartStore();
   const [cartItems, setCartItems] = useState([]);
@@ -20,6 +25,7 @@ function Cart() {
     };
     fetchData();
   }, [user, FetchCartItems]);
+
   const cartTotal = cartItems.reduce((total, item) => {
     const product = item.Products;
     if (!product) return total;
@@ -38,9 +44,26 @@ function Cart() {
       `House No: ${form.Houseno}, City: ${form.City}, Landmark: ${form.Landmark}, Pincode: ${form.Pincode}`
     );
     try {
-      const clienSecret = await PaymentS({
+      const { clientSecret } = await PaymentS({
         amount: Math.round(cartTotal * 100),
       });
+      const result = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: elements.getElement(CardElement),
+          billing_details: {
+            name: user.name,
+            email: user.email,
+          },
+        },
+      });
+      if (result.error) {
+        console.error(result.error.message);
+        alert("payment Failed:", result.error.message);
+      } else {
+        if (result.paymentIntent.status == "succeeded") {
+          alert("Payment is Succesfull");
+        }
+      }
     } catch (error) {
       console.error("Error creating payment", error);
     }
@@ -66,7 +89,7 @@ function Cart() {
 
           return (
             <div
-              className="flex gap-6 items-center border p-4 rounded mb-4 lg:w-[calc(100dvw-1rem)] w-full "
+              className="relative flex gap-6 items-center border p-4 rounded mb-4 lg:w-[calc(100dvw-1rem)] w-full "
               key={index}
             >
               <div className="w-full lg:w-1/2 border- ">
@@ -87,6 +110,12 @@ function Cart() {
               <p className="lg:text-lg text-sm font-semibold lg:mt-0 mt-30 border-black">
                 total=${(product.price * item.quantity).toFixed(2)}
               </p>
+              <button
+                className="absolute right-10 bottom-10 p-3 !bg-red-400 rounded-xl h-10 text-center"
+                onClick={() => Itemdel(product._id)}
+              >
+                Remove
+              </button>
             </div>
           );
         })
@@ -158,6 +187,9 @@ function Cart() {
             />
           </div>
         </form>
+      </div>
+      <div className="m-5 border p-4 rounded">
+        <CardElement />
       </div>
       <div className="flex justify-center items-center ">
         <button

@@ -63,4 +63,19 @@ export const CartStore = create(() => ({
       toast.error("Failed to load products");
     }
   },
+  Itemdel: async (id) => {
+    console.log(id);
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/itemdelete`,
+        { id }
+      );
+      if (res.data.success) {
+        toast.success("Deleted an Items from card");
+      }
+    } catch (error) {
+      console.log("Error in server", error);
+      toast.error("Error at api fetch");
+    }
+  },
 }));

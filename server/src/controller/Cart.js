@@ -51,14 +51,29 @@ export const FetchCartItems = async (req, res) => {
       return res.status(404).json({ message: "Cart not found for this user" });
     }
 
-    res
-      .status(200)
-      .json({
-        message: "Product details fetchnig",
-        items: cartItems.map((cart) => cart.items).flat(),
-      });
+    res.status(200).json({
+      message: "Product details fetchnig",
+      items: cartItems.map((cart) => cart.items).flat(),
+    });
   } catch (error) {
     console.error("Error fetching cart:", error);
     res.status(500).json({ message: "Server error fetching cart" });
+  }
+};
+
+export const DeleteItems = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const isPresent = await CartItems.findById(id);
+    if (!isPresent) {
+      res.status(404).json({ message: "Product not found" });
+    }
+    await CartItems.findByIdAndDelete(id);
+    return res
+      .status(200)
+      .json({ success: true, message: "Item deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting item:", error);
+    return res.status(500).json({ success: false, message: "Server error" });
   }
 };
