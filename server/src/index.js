@@ -20,16 +20,13 @@ const PORT = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CoRs"));
-      }
-    },
+    origin: allowedOrigins,
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
 app.post(
   "/payment/webhook",
   bodyParser.raw({ type: "application/json" }),
@@ -50,3 +47,13 @@ connectDb();
 //   console.log(`PORT is running on ${PORT} `);
 //
 // });
+
+if (process.env.NODE_ENV !== "production") {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`Server running locally on http://localhost:${PORT}`);
+  });
+}
+
+// ✅ For Vercel
+export default app;
