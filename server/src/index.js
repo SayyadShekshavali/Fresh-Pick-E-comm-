@@ -15,7 +15,7 @@ const allowedOrigins = [
 ];
 const app = express();
 dotenv.config();
-const PORT = process.env.PORT || 7283;
+const PORT = process.env.BACKEND_URL || 7283;
 
 app.use(
   cors({
