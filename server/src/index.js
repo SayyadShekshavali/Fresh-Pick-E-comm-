@@ -12,6 +12,7 @@ import payment from "./routers/payment.router.js";
 const allowedOrigins = [
   "http://localhost:5173",
   "https://fresh-pick-e-comm.vercel.app",
+  "https://fresh-pick-e-comm-an2n.vercel.app",
 ];
 const app = express();
 dotenv.config();
