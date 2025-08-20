@@ -71,8 +71,6 @@ export const CartStore = create(() => ({
       );
       if (res.data.success) {
         toast.success("Deleted an Items from card");
-      } else {
-        toast.error(res.data.message || "Failed to delete item");
       }
     } catch (error) {
       console.log("Error in server", error);

@@ -1,5 +1,6 @@
 import express from "express";
 import CartItems from "../models/cartitems.js";
+import mongoose from "mongoose";
 
 export const CartStore = async (req, res) => {
   try {
@@ -72,7 +73,7 @@ export const DeleteItems = async (req, res) => {
     }
     const update = await CartItems.findOneAndUpdate(
       { UserId: userId },
-      { $pull: { items: { productId } } },
+      { $pull: { items: { Products: mongoose.Types.ObjectId(productId) } } },
       { new: true }
     );
     return res.status(200).json({
