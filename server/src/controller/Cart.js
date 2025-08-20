@@ -64,14 +64,14 @@ export const FetchCartItems = async (req, res) => {
 export const DeleteItems = async (req, res) => {
   try {
     const { userId, productId } = req.body;
-    const user = await CartItems.findOne({ userId });
+    const user = await CartItems.findOne({ UserId: userId });
     if (!user) {
       return res
         .status(404)
         .json({ success: false, message: "Cart not found" });
     }
     const update = await CartItems.findOneAndUpdate(
-      { userId },
+      { UserId: userId },
       { $pull: { items: { productId } } },
       { new: true }
     );

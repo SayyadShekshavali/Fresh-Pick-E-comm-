@@ -62,8 +62,8 @@ export const CartStore = create(() => ({
     }
   },
   Itemdel: async (userId, productId) => {
-    console.log("Product_id:", productId);
     console.log("User_id", userId);
+    console.log("Product_id:", productId);
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}/cart/itemdelete`,
@@ -71,6 +71,8 @@ export const CartStore = create(() => ({
       );
       if (res.data.success) {
         toast.success("Deleted an Items from card");
+      } else {
+        toast.error(res.data.message || "Failed to delete item");
       }
     } catch (error) {
       console.log("Error in server", error);

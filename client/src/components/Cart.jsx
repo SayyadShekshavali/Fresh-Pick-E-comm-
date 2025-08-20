@@ -112,7 +112,7 @@ function Cart() {
               </p>
               <button
                 className="absolute right-10 bottom-10 p-3 !bg-red-400 rounded-xl h-10 text-center"
-                onClick={() => Itemdel(product._id, user._id)}
+                onClick={() => Itemdel(user._id, product._id)}
               >
                 Remove
               </button>
