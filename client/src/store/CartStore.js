@@ -69,9 +69,7 @@ export const CartStore = create(() => ({
         `${import.meta.env.VITE_API_URL}/cart/itemdelete`,
         { userId, productId }
       );
-      if (res.data.success) {
-        toast.success("Deleted an Items from card");
-      }
+      console.log(res);
     } catch (error) {
       console.log("Error in server", error);
       toast.error("Error at api fetch");

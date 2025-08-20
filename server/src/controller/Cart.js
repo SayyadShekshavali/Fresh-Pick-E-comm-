@@ -71,6 +71,12 @@ export const DeleteItems = async (req, res) => {
         .status(404)
         .json({ success: false, message: "Cart not found" });
     }
+    if (!mongoose.Types.ObjectId.isValid(productId)) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid productId" });
+    }
+
     const update = await CartItems.findOneAndUpdate(
       { UserId: userId },
       { $pull: { items: { Products: mongoose.Types.ObjectId(productId) } } },
@@ -81,7 +87,7 @@ export const DeleteItems = async (req, res) => {
       cart: update,
     });
   } catch (error) {
-    console.error("Error deleting item:", error);
+    console.error("Error deleting item:", error.message, error.stack);
     return res.status(500).json({ success: false, message: "Server error" });
   }
 };
