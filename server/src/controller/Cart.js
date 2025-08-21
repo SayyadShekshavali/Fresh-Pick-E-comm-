@@ -41,6 +41,7 @@ export const CartStore = async (req, res) => {
 
 export const FetchCartItems = async (req, res) => {
   const { UserId } = req.query;
+
   if (!UserId) {
     return res.status(400).json({ message: "UserId is required" });
   }
@@ -65,6 +66,8 @@ export const FetchCartItems = async (req, res) => {
 export const DeleteItems = async (req, res) => {
   try {
     const { userId, productId } = req.body;
+    console.log("Incoming delete request body:", req.body);
+
     const user = await CartItems.findOne({ UserId: userId });
     if (!user) {
       return res
@@ -79,7 +82,9 @@ export const DeleteItems = async (req, res) => {
 
     const update = await CartItems.findOneAndUpdate(
       { UserId: userId },
-      { $pull: { items: { Products: mongoose.Types.ObjectId(productId) } } },
+      {
+        $pull: { items: { Products: new mongoose.Types.ObjectId(productId) } },
+      },
       { new: true }
     );
     return res.status(200).json({
