@@ -40,6 +40,17 @@ function Cart() {
     ) {
       alert("Invalid Address details");
     }
+
+    if (!stripe || !elements) {
+      alert("Stripe is not yet loaded. Please try again.");
+      return;
+    }
+
+    const cardElement = elements.getElement(CardElement);
+    if (!cardElement) {
+      alert("Please enter your card details");
+      return;
+    }
     console.log(
       `House No: ${form.Houseno}, City: ${form.City}, Landmark: ${form.Landmark}, Pincode: ${form.Pincode}`
     );
@@ -72,6 +83,12 @@ function Cart() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleRemove = async (userId, productId) => {
+    await Itemdel(userId, productId);
+    const items = await FetchCartItems({ UserId: userId });
+    setCartItems(items || []);
   };
   return (
     <div>
@@ -112,7 +129,7 @@ function Cart() {
               </p>
               <button
                 className="absolute right-10 bottom-10 p-3 !bg-red-400 rounded-xl h-10 text-center"
-                onClick={() => Itemdel(user._id, product._id)}
+                onClick={() => handleRemove(user._id, product._id)}
               >
                 Remove
               </button>
