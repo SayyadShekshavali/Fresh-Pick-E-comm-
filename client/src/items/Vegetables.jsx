@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useProductStore } from "../store/useProductStore";
 import { Link } from "react-router-dom";
+import { useAuthStore } from "../store/useAuthstore";
+import { CartStore } from "../store/CartStore";
 function Vegetables() {
+  const { user } = useAuthStore();
+  const { AddtoCart } = CartStore();
   const [quantities, setQuantities] = useState(false);
   const { products, fetchByType, isLoading } = useProductStore();
   useEffect(() => {
