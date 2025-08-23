@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { CartStore } from "../store/CartStore";
+import { Link } from "react-router-dom";
 function Search() {
   const search = CartStore((state) => state.search);
   const [product, setProduct] = useState([]);
@@ -35,21 +36,25 @@ function Search() {
             product.map((item, index) => {
               return (
                 <div key={index} className="flex flex-col items-center m-4">
-                  <img
-                    src={`http://localhost:5000/${item.photo.replace(
-                      /\\/g,
-                      "/"
-                    )}`}
-                    alt={item.name}
-                    className="lg:h-50 lg:w-100 h-[70px] w-[140px] md:h-[90px] w-[150px] object-cover rounded"
-                  />
-                  <div className="text-center mt-2">
-                    <p className="lg:text-xl text-md font-bold">{item.name}</p>
-                    <p className="lg:text-lg text-md">Price: ${item.price}</p>
-                    <p className="lg:text-lg text-md">
-                      Quantity: {item.quantity}
-                    </p>
-                  </div>
+                  <Link className="!text-black" to={`/product/${item._id} `}>
+                    <img
+                      src={`http://localhost:5000/${item.photo.replace(
+                        /\\/g,
+                        "/"
+                      )}`}
+                      alt={item.name}
+                      className="lg:h-50 lg:w-100 h-[70px] w-[140px] md:h-[90px] w-[150px] object-cover rounded"
+                    />
+                    <div className="text-center mt-2">
+                      <p className="lg:text-xl text-md font-bold">
+                        {item.name}
+                      </p>
+                      <p className="lg:text-lg text-md">Price: ${item.price}</p>
+                      <p className="lg:text-lg text-md">
+                        Quantity: {item.quantity}
+                      </p>
+                    </div>
+                  </Link>
                 </div>
               );
             })

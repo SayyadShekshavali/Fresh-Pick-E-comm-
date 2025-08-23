@@ -16,6 +16,11 @@ import About from "./components/About";
 import Footer from "./components/Footer";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import Vegetables from "./items/Vegetables";
+import Homesnacks from "./items/Homesnacks";
+import Fruits from "./items/Fruits";
+import Dairy from "./items/Dairy";
+import Others from "./items/Others";
 const stripePromise = loadStripe(import.meta.env.VITE_PUBLISHABLE_KEY);
 function App() {
   const { user, isSigningUp, isLoggingIn } = useAuthStore();
@@ -38,6 +43,11 @@ function App() {
             <Route path="/Cart" element={<Cart />} />
             <Route path="/Search" element={<Search />} />
             <Route path="/About" element={<About />} />
+            <Route path="/vegetables" element={<Vegetables />} />
+            <Route path="/homesnacks" element={<Homesnacks />} />
+            <Route path="/fruits" element={<Fruits />} />
+            <Route path="/dairy" element={<Dairy />} />
+            <Route path="/more" element={<Others />} />
           </Routes>
           <Footer />
           <Toaster />

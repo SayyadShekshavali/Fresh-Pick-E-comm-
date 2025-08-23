@@ -2,9 +2,10 @@ import React from "react";
 import img from "../assets/maini.png";
 import veg from "../assets/veg.png";
 import fruits from "../assets/fruits.png";
-import spf from "../assets/specialfood.jpg";
+import spf from "../assets/specialfood.png";
+import dairy from "../assets/dairy.png";
 
-import snacks from "../assets/snacks.jpg";
+import snacks from "../assets/snacks.png";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useProductStore } from "../store/useProductStore.js";
@@ -55,7 +56,7 @@ function Home() {
             <p className="text-white !text-xl text-center mt-10 font-serif lg:ml-0 md:ml-0  ">
               We sell direct to farmer to customer
             </p>
-            <button className="w-30 !bg-green-500 lg:ml-45 mt-10">
+            <button className="w-30 h-10 rounded-2xl !bg-green-500 lg:ml-45 mt-10">
               Shop now
             </button>
           </div>
@@ -67,69 +68,81 @@ function Home() {
         </div>
       </div>
       <div className="mt-10  mx-0 h-35 w-[calc(100dvw-2rem)] border-0 border-black p-2 flex flex-wrap   justify-center items-center">
-        <div className="lg:h-30 h-25 lg:w-40 w-30 border-0 border-black lg:mx-10  mb-8 rounded-xl shadow-[0px_0px_5px_3px_rgba(0,0,0,0.5)] transition-transform duration-300 hover:scale-105 mx-3">
-          <h1 className="lg:!text-xl  !text-sm mt-1 ml-2  font-bold">
-            Vegetables
-          </h1>
-          <p className="lg:!text-[15px] ml:10 !text-[10px] mb-2">
-            From formers
-          </p>
-          <img
-            src={veg}
-            className="lg:h-20 h-10  lg:w-30 w-20 -mt-2 ml-7"
-            alt="veg"
-          />
-        </div>
-        <div className="lg:h-30 h-25 lg:w-40 w-30 border-0 border-black lg:mx-10  mb-8 rounded-xl shadow-[0px_0px_5px_3px_rgba(0,0,0,0.5)] transition-transform duration-300 hover:scale-105 ">
-          <h1 className="lg:!text-xl  !text-sm mt-1 ml-2 font-bold">
-            {" "}
-            HomeSnacks
-          </h1>
-          <p className="lg:!text-[15px] ml:10 !text-[10px] mb-2">
-            From formers
-          </p>
-          <img
-            src={snacks}
-            className="lg:h-20 h-10  lg:w-30 w-20 -mt-2 ml-7"
-            alt="veg"
-          />
-        </div>
-        <div className="lg:h-30 h-25 lg:w-40 w-30 border-0 border-black lg:mx-10  mb-8 rounded-xl shadow-[0px_0px_5px_3px_rgba(0,0,0,0.5)] transition-transform duration-300 hover:scale-105 mx-3">
-          <h1 className="lg:!text-xl  !text-sm mt-1 ml-2 font-bold">Fruits</h1>
-          <p className="lg:!text-[15px] ml:10 !text-[10px] mb-2">
-            From formers
-          </p>
-          <img
-            src={fruits}
-            className="lg:h-20 h-10  lg:w-30 w-20 -mt-2 ml-7"
-            alt="veg"
-          />
-        </div>
-        <div className="lg:h-30 h-25 lg:w-40 w-30 border-0 border-black lg:mx-10  mb-8 rounded-xl shadow-[0px_0px_5px_3px_rgba(0,0,0,0.5)] transition-transform duration-300 hover:scale-105 ">
-          <h1 className="lg:!text-xl  !text-sm mt-1 ml-2 font-bold">Dairy</h1>
-          <p className="lg:!text-[15px] ml:10 !text-[10px] mb-2">
-            From formers
-          </p>
-          <img
-            src={veg}
-            className="lg:h-20 h-10  lg:w-30 w-20 -mt-2 ml-7"
-            alt="veg"
-          />
-        </div>
-        <div className="lg:h-30 h-25 lg:w-40 w-30 border-0 border-black lg:mx-10  mb-8 rounded-xl shadow-[0px_0px_5px_3px_rgba(0,0,0,0.5)] transition-transform duration-300 hover:scale-105 mx-3">
-          <h1 className="lg:!text-xl  !text-sm mt-1 ml-2 font-bold">More</h1>
-          <p className="lg:!text-[15px] ml:10 !text-[10px] mb-2">
-            From formers
-          </p>
-          <img
-            src={spf}
-            className="lg:h-20 h-10  lg:w-30 w-20 -mt-2 ml-7"
-            alt="veg"
-          />
-        </div>
+        <Link className="!text-black" to={"/vegetables"}>
+          <div className="lg:h-30 h-25 lg:w-40 w-30 border-0 border-black lg:mx-10  mb-8 rounded-xl shadow-[0px_0px_5px_3px_rgba(0,0,0,0.5)] transition-transform duration-300 hover:scale-105 mx-3">
+            <h1 className="lg:!text-xl  !text-sm mt-1 ml-2  font-bold">
+              Vegetables
+            </h1>
+            <p className="lg:!text-[15px] ml:10 !text-[10px] mb-2">
+              From formers
+            </p>
+            <img
+              src={veg}
+              className="lg:h-20 h-10  lg:w-30 w-20 -mt-2 ml-7"
+              alt="veg"
+            />
+          </div>
+        </Link>
+        <Link className="!text-black" to={"/homesnacks"}>
+          <div className="lg:h-30 h-25 lg:w-40 w-30 border-0 border-black lg:mx-10  mb-8 rounded-xl shadow-[0px_0px_5px_3px_rgba(0,0,0,0.5)] transition-transform duration-300 hover:scale-105 ">
+            <h1 className="lg:!text-xl  !text-sm mt-1 ml-2 font-bold">
+              {" "}
+              HomeSnacks
+            </h1>
+            <p className="lg:!text-[15px] ml:10 !text-[10px] mb-2">
+              From formers
+            </p>
+            <img
+              src={snacks}
+              className="lg:h-20 h-10  lg:w-30 w-20 -mt-2 ml-7"
+              alt="veg"
+            />
+          </div>
+        </Link>
+        <Link className="!text-black" to={"/fruits"}>
+          <div className="lg:h-30 h-25 lg:w-40 w-30 border-0 border-black lg:mx-10  mb-8 rounded-xl shadow-[0px_0px_5px_3px_rgba(0,0,0,0.5)] transition-transform duration-300 hover:scale-105 mx-3">
+            <h1 className="lg:!text-xl  !text-sm mt-1 ml-2 font-bold">
+              Fruits
+            </h1>
+            <p className="lg:!text-[15px] ml:10 !text-[10px] mb-2">
+              From formers
+            </p>
+            <img
+              src={fruits}
+              className="lg:h-20 h-10  lg:w-30 w-20 -mt-2 ml-7"
+              alt="veg"
+            />
+          </div>
+        </Link>
+        <Link className="!text-black" to={"/dairy"}>
+          <div className="lg:h-30 h-25 lg:w-40 w-30 border-0 border-black lg:mx-10  mb-8 rounded-xl shadow-[0px_0px_5px_3px_rgba(0,0,0,0.5)] transition-transform duration-300 hover:scale-105 ">
+            <h1 className="lg:!text-xl  !text-sm mt-1 ml-2 font-bold">Dairy</h1>
+            <p className="lg:!text-[15px] ml:10 !text-[10px] mb-2">
+              From formers
+            </p>
+            <img
+              src={dairy}
+              className="lg:h-25 h-10  lg:w-35 w-20 -mt-6 ml-0"
+              alt="veg"
+            />
+          </div>
+        </Link>
+        <Link className="!text-black" to={"/more"}>
+          <div className="lg:h-30 h-25 lg:w-40 w-30 border-0 border-black lg:mx-10  mb-8 rounded-xl shadow-[0px_0px_5px_3px_rgba(0,0,0,0.5)] transition-transform duration-300 hover:scale-105 mx-3">
+            <h1 className="lg:!text-xl  !text-sm mt-1 ml-2 font-bold">More</h1>
+            <p className="lg:!text-[15px] ml:10 !text-[10px] mb-2">
+              From formers
+            </p>
+            <img
+              src={spf}
+              className="lg:h-17 h-10  lg:w-26 w-20 -mt-2 ml-7 rounded-xl"
+              alt="veg"
+            />
+          </div>
+        </Link>
       </div>
 
-      <h1 className="lg:w-100  border-0 border-black  ml-20 lg:mt-0 md:ml-0 sm:ml-70 font-bold lg:!text-4xl !text-xl lg:mt-0 md:mt-0 mt-70">
+      <h1 className="lg:w-100  border-0 border-black  ml-20 lg:mt-5 md:ml-0 sm:ml-70 font-bold lg:!text-4xl !text-xl lg:mt-0 md:mt-0 mt-70">
         Best sellers
       </h1>
       <div className="  border-0 border-black lg:mt-0 md:mt-0 flex mt-0">

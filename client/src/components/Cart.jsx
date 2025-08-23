@@ -11,6 +11,7 @@ function Cart() {
   const { user } = useAuthStore();
   const { FetchCartItems } = CartStore();
   const [cartItems, setCartItems] = useState([]);
+  const [isCardComplete, setIsCardComplete] = useState(false);
   const { PaymentS } = Payment();
   const [form, setForm] = useState({
     Houseno: "",
@@ -206,14 +207,19 @@ function Cart() {
         </form>
       </div>
       <div className="m-5 border p-4 rounded">
-        <CardElement />
+        <CardElement onChange={(event) => setIsCardComplete(event.complete)} />
       </div>
       <div className="flex justify-center items-center ">
         <button
+          disabled={!isCardComplete || cartItems.length === 0}
           onClick={() => {
             checkValidations();
           }}
-          className="px-4 py-2 !bg-teal-600 text-black rounded-xl"
+          className={`px-4 py-2 !bg-teal-600 text-black rounded-xl ${
+            !isCardComplete || cartItems.length === 0
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-teal-600 text-black"
+          }`}
         >
           Buy it now
         </button>

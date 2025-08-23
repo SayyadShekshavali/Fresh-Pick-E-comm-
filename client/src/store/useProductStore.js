@@ -22,4 +22,21 @@ export const useProductStore = create((set) => ({
       set({ isLoading: false });
     }
   },
+  fetchByType: async (type) => {
+    set({ isLoading: true });
+    console.log(type);
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/product/fetchbytype/${type}`
+      );
+      set({ products: res.data.products, isLoading: false });
+      console.log(res.data);
+      toast.success("Fetched Based on the type");
+    } catch (error) {
+      console.error("Error fetching products:", error);
+
+      set({ isLoading: false });
+      toast.error("Failed to load products");
+    }
+  },
 }));
