@@ -4,7 +4,15 @@ import toast from "react-hot-toast";
 axios.defaults.withCredentials = true;
 export const userProductupload = create((set) => ({
   isUploading: false,
-  upload: async ({ name, quantity, price, type, photo, description }) => {
+  upload: async ({
+    name,
+    quantity,
+    price,
+    type,
+    photo,
+    description,
+    location,
+  }) => {
     set({ isUploading: true });
     const formData = new FormData();
     formData.append("name", name);
@@ -13,7 +21,8 @@ export const userProductupload = create((set) => ({
     formData.append("type", type);
     formData.append("photo", photo);
     formData.append("description", description);
-
+    formData.append("location", location);
+    console.log(formData);
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}/product/upload`,

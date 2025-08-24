@@ -27,7 +27,7 @@ function Login() {
     if (success == true) {
       const logedup = await login(formdata);
       if (logedup) {
-        navigate("/home");
+        navigate("/profile");
       }
     }
   };

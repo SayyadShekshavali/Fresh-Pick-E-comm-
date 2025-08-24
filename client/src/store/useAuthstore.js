@@ -71,6 +71,12 @@ export const useAuthStore = create(
             },
             { withCredentials: true }
           );
+          const token = res.data.token;
+          if (token) {
+            localStorage.setItem("token", token);
+            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+          }
+          console.log(token);
           set({ user: res.data });
           toast.success("Logged in successfully");
 

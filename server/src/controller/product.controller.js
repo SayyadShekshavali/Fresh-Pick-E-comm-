@@ -2,7 +2,7 @@ import Product from "../models/Products.js";
 
 export const upload = async (req, res) => {
   try {
-    const { name, quantity, price, type, description } = req.body;
+    const { name, quantity, price, type, description, location } = req.body;
     const photo = req.file?.path.replace(/\\/g, "/") || "";
 
     const userId = req.userId;
@@ -15,6 +15,7 @@ export const upload = async (req, res) => {
       photo,
       user: userId,
       description,
+      location,
     });
     await newProduct.save();
     res

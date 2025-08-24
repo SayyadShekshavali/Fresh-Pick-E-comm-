@@ -21,6 +21,7 @@ import Homesnacks from "./items/Homesnacks";
 import Fruits from "./items/Fruits";
 import Dairy from "./items/Dairy";
 import Others from "./items/Others";
+import Profile from "./components/Profile";
 const stripePromise = loadStripe(import.meta.env.VITE_PUBLISHABLE_KEY);
 function App() {
   const { user, isSigningUp, isLoggingIn } = useAuthStore();
@@ -36,7 +37,8 @@ function App() {
               path="/signup"
               element={isSigningUp ? <Navigate to="/login" /> : <Signup />}
             />
-            <Route path="/login" element={isLoggingIn ? <Home /> : <Login />} />
+
+            <Route path="/login" element={<Login />} />
             <Route path="/upload" element={<PUploadForm />} />
             <Route path="/product/:id" element={<PDetails />} />
             <Route path="/product/:id/write" element={<WriteReview />} />
@@ -48,6 +50,8 @@ function App() {
             <Route path="/fruits" element={<Fruits />} />
             <Route path="/dairy" element={<Dairy />} />
             <Route path="/more" element={<Others />} />
+
+            <Route path="/profile" element={user ? <Profile /> : <Login />} />
           </Routes>
           <Footer />
           <Toaster />

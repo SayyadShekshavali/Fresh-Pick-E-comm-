@@ -5,15 +5,16 @@ import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthstore";
 import PUploadForm from "./PUploadForm";
 
-function Navbar(role) {
+function Navbar() {
+  const [role, setRole] = useState("Customer");
   const [isOn, setIsOn] = useState(false);
   const [open, setOpen] = useState("");
   const menuref = useRef(null);
   const toggle = () => {
     const newState = !isOn;
     setIsOn(newState);
-    role(newState ? "Seller" : "Customer");
-    console.log(role);
+    setRole(newState ? "Seller" : "Customer");
+    console.log("Role set to:", newState ? "Seller" : "Customer");
   };
   const { user } = useAuthStore();
   const Navigate = useNavigate();

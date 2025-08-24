@@ -112,7 +112,7 @@ export const login = async (req, res) => {
     if (!passcorrect) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
-    generateToken(user._id, res);
+    const token = generateToken(user._id, res);
 
     user.lastLogin = new Date();
     await user.save();
@@ -121,6 +121,7 @@ export const login = async (req, res) => {
       fullname: user.fullname,
       email: user.email,
       Profilepic: user.Profilepic,
+      token,
     });
   } catch (error) {
     console.log("Error in login controller ", error);

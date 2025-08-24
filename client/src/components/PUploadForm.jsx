@@ -16,6 +16,7 @@ function PUploadForm() {
     type: "",
     photo: null,
     description: "",
+    location: { type: "Point", coordinates: [] },
   });
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -40,7 +41,8 @@ function PUploadForm() {
       !product.price ||
       !product.quantity ||
       !product.type ||
-      !product.photo
+      !product.photo ||
+      !product.location
     ) {
       toast.error("Please fill all fields");
       return;
@@ -53,8 +55,9 @@ function PUploadForm() {
       type: product.type,
       photo: product.photo,
       description: product.description,
+      location: product.location,
     });
-
+    console.log(upload);
     setProduct({
       name: "",
       price: "",
@@ -62,12 +65,34 @@ function PUploadForm() {
       type: "",
       photo: null,
       description: "",
+      location: "",
     });
     if (setProduct) {
       navigate("/home");
     }
   };
 
+  const handleGeoLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const lat = pos.coords.latitude;
+          const lng = pos.coords.longitude;
+          setProduct({
+            ...product,
+            location: { type: "Point", coordinates: [lat, lng] },
+          });
+          toast.success("Location Captured");
+        },
+        (err) => {
+          console.error(err);
+          toast.error("Failed to get Location");
+        }
+      );
+    } else {
+      toast.error("Geolocation not supported in your browser");
+    }
+  };
   return (
     <div className="relative  border-0 border-black h-auto w-[calc(100dvw-1rem)] mb-20">
       <div className="flex items-center justify-center h-full w-full m-6">
@@ -140,7 +165,12 @@ function PUploadForm() {
                 className="w-40 h-40 object-cover mx-auto mt-4 border rounded"
               />
             )}
-
+            <button
+              className=" w-40 py-2 rounded-xl mt-3 mx-auto bg-red-700 "
+              onClick={handleGeoLocation}
+            >
+              Use Current location
+            </button>
             <button
               type="submit"
               disabled={isUploading}

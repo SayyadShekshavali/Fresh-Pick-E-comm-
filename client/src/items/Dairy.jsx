@@ -25,10 +25,13 @@ function Dairy() {
     }));
   };
   return (
-    <div>
-      <div className="">
-        {isLoading ? (
-          <p>Loading products....</p>
+    <div className="mb-30">
+      <h1 className="text-center font-bold !text-4xl p-5">Dairy Products</h1>
+      <div className="flex justify-center items-center flex gap-10 m-10">
+        {products.length === 0 ? (
+          <p className="text-center font-bold">
+            Products not available right now // LoadinG....{" "}
+          </p>
         ) : (
           products
             .filter((products) => products)
