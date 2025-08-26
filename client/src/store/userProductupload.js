@@ -24,6 +24,8 @@ export const userProductupload = create((set) => ({
     formData.append("location", location);
     console.log(formData);
     try {
+      const token = localStorage.getItem("token");
+      console.log("Stored token:", token);
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}/product/upload`,
         formData,
@@ -31,6 +33,7 @@ export const userProductupload = create((set) => ({
           withCredentials: true,
           headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
