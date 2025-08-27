@@ -46,8 +46,10 @@ export const userProductupload = create((set) => ({
       toast.success("Product uploaded");
       console.log("Upload success:", res.data);
     } catch (error) {
-      console.log("error in uploading product:", error);
-      toast.error(error?.response?.data?.message || "Upload failed");
+      const errorMessage =
+        error?.response?.data?.message || "Upload failed. Please try again.";
+      toast.error(errorMessage);
+      return false;
     } finally {
       set({ isUploading: false });
     }
