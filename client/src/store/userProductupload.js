@@ -2,6 +2,8 @@ import { create } from "zustand";
 import axios from "axios";
 import toast from "react-hot-toast";
 axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true;
+
 export const userProductupload = create((set) => ({
   isUploading: false,
   upload: async ({

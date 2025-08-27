@@ -196,7 +196,7 @@ export const logout = async (req, res) => {
 
 export const profile = async (req, res) => {
   const { profilepic } = req.body;
-  const userId = req.user._id;
+  const userId = req.userId;
 
   try {
     if (!profilepic) {
@@ -256,7 +256,7 @@ export const addToCart = async (req, res) => {
 
 export const allItems = async (req, res) => {
   try {
-    const items = await CartItem.find({ userId: req.param.userId });
+    const items = await CartItem.find({ userId: req.params.userId });
     res.json(items);
   } catch (error) {
     res.status(500).json({ error: error.message });
