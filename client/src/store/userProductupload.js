@@ -21,7 +21,7 @@ export const userProductupload = create((set) => ({
     formData.append("type", type);
     formData.append("photo", photo);
     formData.append("description", description);
-    formData.append("location", location);
+    formData.append("location", JSON.stringify(location || {}));
     console.log(formData);
     try {
       const token = localStorage.getItem("token");
@@ -33,7 +33,6 @@ export const userProductupload = create((set) => ({
           withCredentials: true,
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
           },
         }
       );

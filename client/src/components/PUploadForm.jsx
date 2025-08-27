@@ -42,13 +42,13 @@ function PUploadForm() {
       !product.quantity ||
       !product.type ||
       !product.photo ||
-      !product.location
+      product.location.coordinates.length !== 2
     ) {
       toast.error("Please fill all fields");
       return;
     }
 
-    await upload({
+    const success = await upload({
       name: product.name,
       price: product.price,
       quantity: product.quantity,
@@ -58,16 +58,18 @@ function PUploadForm() {
       location: product.location,
     });
     console.log(upload);
-    setProduct({
-      name: "",
-      price: "",
-      quantity: "",
-      type: "",
-      photo: null,
-      description: "",
-      location: "",
-    });
-    if (setProduct) {
+
+    if (success) {
+      toast.success("Product uploaded successfully");
+      setProduct({
+        name: "",
+        price: "",
+        quantity: "",
+        type: "",
+        photo: null,
+        description: "",
+        location: { type: "Point", coordinates: [] },
+      });
       navigate("/home");
     }
   };
@@ -80,7 +82,7 @@ function PUploadForm() {
           const lng = pos.coords.longitude;
           setProduct({
             ...product,
-            location: { type: "Point", coordinates: [lat, lng] },
+            location: { type: "Point", coordinates: [lng, lat] },
           });
           toast.success("Location Captured");
         },
