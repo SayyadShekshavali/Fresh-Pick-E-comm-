@@ -56,6 +56,7 @@ function PUploadForm() {
       photo: product.photo,
       description: product.description,
       location: product.location,
+      userId: user._id,
     });
     console.log(upload);
 

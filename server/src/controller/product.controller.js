@@ -6,12 +6,22 @@ export const upload = async (req, res) => {
 
     const location = req.body.location ? JSON.parse(req.body.location) : null;
 
-    const { name, quantity, price, type, description } = req.body;
+    const { name, quantity, price, type, description, userId } = req.body;
     const photo = req.file?.path.replace(/\\/g, "/") || "";
     if (!photo) {
       return res.status(400).json({ message: "Photo is required" });
     }
-    const userId = req.userId;
+    if (!userId) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
+
+    if (
+      !location ||
+      !location.coordinates ||
+      location.coordinates.length !== 2
+    ) {
+      return res.status(400).json({ message: "Valid location is required" });
+    }
 
     const newProduct = new Product({
       name,

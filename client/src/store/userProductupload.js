@@ -14,6 +14,7 @@ export const userProductupload = create((set) => ({
     photo,
     description,
     location,
+    userId,
   }) => {
     set({ isUploading: true });
     const formData = new FormData();
@@ -24,7 +25,11 @@ export const userProductupload = create((set) => ({
     formData.append("photo", photo);
     formData.append("description", description);
     formData.append("location", JSON.stringify(location || {}));
+    formData.append("userId", userId);
     console.log("Whilw data:", JSON.stringify(location || {}));
+    for (let pair of formData.entries()) {
+      console.log(pair[0] + ": " + pair[1]);
+    }
     try {
       const token = localStorage.getItem("token");
       console.log("Stored token:", token);
