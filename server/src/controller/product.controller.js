@@ -4,7 +4,8 @@ export const upload = async (req, res) => {
   try {
     console.log("REQ.BODY.LOCATION:", req.body.location);
 
-    const location = req.body.location || null;
+    const location = req.body.location ? JSON.parse(req.body.location) : null;
+
     const { name, quantity, price, type, description } = req.body;
     const photo = req.file?.path.replace(/\\/g, "/") || "";
     if (!photo) {
