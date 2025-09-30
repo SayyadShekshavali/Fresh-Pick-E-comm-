@@ -11,8 +11,7 @@ import { stripewebhook } from "./controller/webhookctrls.js";
 import payment from "./routers/payment.router.js";
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://fresh-pick-e-comm.vercel.app",
-  "https://fresh-pick-e-comm-an2n.vercel.app",
+  "https://fresh-pick-e-comm.onrender.com",
 ];
 const app = express();
 dotenv.config();
@@ -43,17 +42,6 @@ app.use("/payment", payment);
 app.use(express.urlencoded({ extended: true }));
 
 connectDb();
-// app.listen(PORT, () => {
-//   console.log(`PORT is running on ${PORT} `);
-//
-// });
-
-if (process.env.NODE_ENV !== "production") {
-  const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => {
-    console.log(`Server running locally on http://localhost:${PORT}`);
-  });
-}
-
-// ✅ For Vercel
-export default app;
+app.listen(PORT, () => {
+  console.log(`PORT is running on ${PORT} `);
+});
