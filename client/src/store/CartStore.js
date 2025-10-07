@@ -4,11 +4,11 @@ import { create } from "zustand";
 export const CartStore = create(() => ({
   AddtoCart: async ({ User, Product, quantity }) => {
     const Data = {
-      UserId: User,
+      userId: User,
       ProductId: Product,
       quantity: quantity,
     };
-    console.log(Data);
+    console.log("Add to cart data:", Data);
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}/cart/add`,
@@ -27,7 +27,7 @@ export const CartStore = create(() => ({
       const response = await axios.get(
         `${import.meta.env.VITE_API_URL}/cart/fetchCartItems`,
         {
-          params: { UserId },
+          params: { userId: UserId },
         }
       );
       const items = response.data.items;

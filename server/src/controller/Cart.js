@@ -4,13 +4,14 @@ import mongoose from "mongoose";
 
 export const CartStore = async (req, res) => {
   try {
-    const { UserId, ProductId, quantity } = req.body;
-    if (!UserId || !ProductId || !quantity) {
+    const { userId, ProductId, quantity } = req.body;
+    console.log("Request Body:", req.body);
+    if (!userId || !ProductId || !quantity) {
       return res
         .status(400)
         .json({ message: "productId and userId are required." });
     }
-    let cart = await CartItems.findOne({ UserId });
+    let cart = await CartItems.findOne({ userId });
 
     if (cart) {
       const itemIdx = cart.items.findIndex(
@@ -25,7 +26,7 @@ export const CartStore = async (req, res) => {
       return res.status(200).json({ message: "Cart updated", cart });
     } else {
       const newCartItems = new CartItems({
-        UserId,
+        userId,
         items: [{ Products: ProductId, quantity }],
       });
       await newCartItems.save();
@@ -34,19 +35,19 @@ export const CartStore = async (req, res) => {
         .json({ message: "Cart created", cart: newCartItems });
     }
   } catch (error) {
-    console.log("Error ar server", error);
-    res.status(404).json({ message: "Error at somewhere in server" });
+    console.log("Error at server", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
 export const FetchCartItems = async (req, res) => {
-  const { UserId } = req.query;
+  const { userId } = req.query;
 
-  if (!UserId) {
-    return res.status(400).json({ message: "UserId is required" });
+  if (!userId) {
+    return res.status(400).json({ message: "userId is required" });
   }
   try {
-    const cartItems = await CartItems.find({ UserId }).populate(
+    const cartItems = await CartItems.find({ userId }).populate(
       "items.Products"
     );
     if (!cartItems) {
@@ -68,7 +69,7 @@ export const DeleteItems = async (req, res) => {
     const { userId, productId } = req.body;
     console.log("Incoming delete request body:", req.body);
 
-    const user = await CartItems.findOne({ UserId: userId });
+    const user = await CartItems.findOne({ userId: userId });
     if (!user) {
       return res
         .status(404)
@@ -81,7 +82,7 @@ export const DeleteItems = async (req, res) => {
     }
 
     const update = await CartItems.findOneAndUpdate(
-      { UserId: userId },
+      { userId: userId },
       {
         $pull: { items: { Products: new mongoose.Types.ObjectId(productId) } },
       },

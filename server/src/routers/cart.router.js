@@ -9,6 +9,6 @@ router.get("/fetchCartItems", FetchCartItems);
 // router.delete("/remove/:userId/:productId", deleteItem);
 // router.delete("/clear/:userId", deleteAll);
 router.get("/Search", Search);
-router.get("fetcj")
+router.get("fetch");
 router.post("/itemdelete", DeleteItems);
 export default router;

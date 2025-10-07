@@ -14,7 +14,7 @@ export const useProductStore = create((set) => ({
       const res = await axios.get(
         `${import.meta.env.VITE_API_URL}/product/fetchall`
       );
-      set({ products: res.data.products });
+      set({ products: res.data ?? [] });
       console.log("Fetched products:", res.data);
     } catch (err) {
       console.error("Error fetching products:", err);

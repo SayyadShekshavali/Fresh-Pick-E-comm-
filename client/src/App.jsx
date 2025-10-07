@@ -8,7 +8,6 @@ import { Toaster } from "react-hot-toast";
 import Login from "./components/Login";
 import PUploadForm from "./components/PUploadForm";
 import PDetails from "./components/PDetails";
-
 import WriteReview from "./components/WriteReview";
 import Cart from "./components/Cart";
 import Search from "./components/Search";
@@ -37,7 +36,6 @@ function App() {
               path="/signup"
               element={isSigningUp ? <Navigate to="/login" /> : <Signup />}
             />
-
             <Route path="/login" element={<Login />} />
             <Route path="/upload" element={<PUploadForm />} />
             <Route path="/product/:id" element={<PDetails />} />

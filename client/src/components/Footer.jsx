@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 function Footer() {
   const Navigate = useNavigate();
   return (
-    <div className="bg-emerald-100 lg:h-75 md:h-70 h-130 w-100dvw -my-15  border-0 border-black rounded-xl">
+    <div className="bg-emerald-100 lg:h-105 md:h-80 h-145 w-100dvw -my-31   rounded-xl border-2 border-green-100">
       <div className="flex flex-row flex-wrap bg-emerald-100 lg:m-15 ">
         <div className="flex-col justify-center items-center lg:m-6 m-4">
           <img

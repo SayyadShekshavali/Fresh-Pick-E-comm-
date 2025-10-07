@@ -3,7 +3,7 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import { connectDb } from "./lib/db.js";
 import authRouters from "./routers/auth.router.js";
-import cartItems from "./routers/cart.router.js";
+import Cart from "./routers/cart.router.js";
 import productupload from "./routers/product.router.js";
 import cors from "cors";
 import bodyParser from "body-parser";
@@ -34,12 +34,15 @@ app.post(
 app.use(express.json());
 app.use(cookieParser());
 app.use("/auth", authRouters);
-app.use("/cart", cartItems);
+app.use("/cart", Cart);
 app.use("/uploads", express.static("uploads"));
 app.use("/product", productupload);
 app.use("/ReviewIV", express.static("ReviewIV"));
 app.use("/payment", payment);
 app.use(express.urlencoded({ extended: true }));
+app.get("/", (req, res) => {
+  res.send("✅ Backend is running");
+});
 
 connectDb();
 app.listen(PORT, () => {

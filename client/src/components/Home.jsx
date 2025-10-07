@@ -7,7 +7,7 @@ import dairy from "../assets/dairy.png";
 
 import snacks from "../assets/snacks.png";
 import { useEffect } from "react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useProductStore } from "../store/useProductStore.js";
 import { Link, useParams } from "react-router-dom";
 import { CartStore } from "../store/CartStore.js";
@@ -16,12 +16,22 @@ function Home() {
   const { user } = useAuthStore();
   const { AddtoCart } = CartStore();
   const [quantities, setQuantities] = useState({});
-  const { products, fetchProducts, isLoading } = useProductStore();
 
+  const products = useProductStore((state) => state.products);
+  const isLoading = useProductStore((state) => state.isLoading);
+  const fetchProducts = useProductStore((state) => state.fetchProducts);
+
+  const productSectionRef = useRef(null);
+  const scrollToProducts = () => {
+    productSectionRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
   useEffect(() => {
     fetchProducts();
-    console.log(products);
-  }, [fetchProducts]);
+  }, []);
+
+  useEffect(() => {
+    console.log("Products updated:", products);
+  }, [products]);
   const incre = (ProductId) => {
     setQuantities((prev) => ({
       ...prev,
@@ -56,7 +66,10 @@ function Home() {
             <p className="text-white !text-xl text-center mt-10 font-serif lg:ml-0 md:ml-0  ">
               We sell direct to farmer to customer
             </p>
-            <button className="w-30 h-10 rounded-2xl !bg-green-500 lg:ml-45 mt-10">
+            <button
+              className="w-30 h-10 rounded-2xl !bg-green-500 lg:ml-45 mt-10"
+              onClick={scrollToProducts}
+            >
               Shop now
             </button>
           </div>
@@ -145,7 +158,10 @@ function Home() {
       <h1 className="lg:w-100  border-0 border-black  ml-20 lg:mt-5 md:ml-0 sm:ml-70 font-bold lg:!text-4xl !text-xl lg:mt-0 md:mt-0 mt-70">
         Best sellers
       </h1>
-      <div className="  border-0 border-black lg:mt-0 md:mt-0 flex mt-0">
+      <div
+        ref={productSectionRef}
+        className="  border-0 border-black lg:mt-0 md:mt-0 flex mt-0"
+      >
         <div
           className=" lg:mt-2 lg:w-[calc(100dvw-2rem)] w-[calc(100dvw-2rem)] lg:ml-0 md:ml-0 -ml-8 h-auto border-0 border-black grid lg:grid-cols-6 
         md:grid-cols-4  grid-cols-2 p-10 lg:gap-10 gap-25 mb-30 "
@@ -153,70 +169,67 @@ function Home() {
           {isLoading ? (
             <p>Loading products...</p>
           ) : (
-            products
-              .filter((product) => product)
-              .map((product) => (
-                <div
-                  className="h-60 w-35 text-black border-0 border-black rounded-xl shadow-2xl transition-all duration-100 lg:mb-10 hover:scale-105 hover:mb-10"
-                  key={product._id}
-                >
-                  <Link className="!text-black" to={`/product/${product._id} `}>
-                    <img
-                      src={`http://localhost:5000/${product.photo.replace(
-                        /\\/g,
-                        "/"
-                      )}`}
-                      alt={product.name}
-                      className="h-30 w-full rounded-t-xl"
-                    />
-                    <h3 className="text-center">
-                      {product.name}({product.quantity})
-                    </h3>
+            (products ?? []).map((product) => (
+              <div
+                className="h-60 w-35 text-black border-0 border-black rounded-xl shadow-2xl transition-all duration-100 lg:mb-10 hover:scale-105 hover:mb-10"
+                key={product._id}
+              >
+                <Link className="!text-black" to={`/product/${product._id} `}>
+                  <img
+                    src={`http://localhost:5000/${product.photo.replace(
+                      /\\/g,
+                      "/"
+                    )}`}
+                    alt={product.name}
+                    className="h-30 w-full rounded-t-xl"
+                  />
+                  <h3 className="text-center">
+                    {product.name}({product.quantity})
+                  </h3>
 
-                    <p className="text-center">Price: {product.price}</p>
-                  </Link>
-                  <div className="flex gap-2 align-center justify-center m-2 ">
-                    <button
-                      className="  px-3 border border-black rounded-2xl text-2xl font-bold pb-1"
-                      onClick={() => {
-                        decre(product._id);
-                      }}
-                    >
-                      -
-                    </button>
-                    <p className=" text-center h-8 w-6 text-xl border-black">
-                      {quantities[product._id] || 1}
-                    </p>
-                    <button
-                      className=" px-2 border border-black rounded-2xl text-2xl font-bold pb-1"
-                      onClick={() => {
-                        incre(product._id);
-                      }}
-                    >
-                      +
-                    </button>
-                  </div>
-                  <div className="flex justify-center bg-teal-700 rounded-xl my-3 h-10">
-                    <button
-                      className="border border-black rounded-xl px-2 py-1 "
-                      onClick={(e) => {
-                        e.preventDefault();
-                        AddtoCart({
-                          User: user?._id,
-                          Product: product._id,
-                          quantity: quantities[product._id] || 1,
-                        });
-                      }}
-                    >
-                      Add to Cart
-                    </button>
-                  </div>
+                  <p className="text-center">Price: {product.price}</p>
+                </Link>
+                <div className="flex gap-2 align-center justify-center m-2 ">
+                  <button
+                    className="  px-3 border border-black rounded-2xl text-2xl font-bold pb-1"
+                    onClick={() => {
+                      decre(product._id);
+                    }}
+                  >
+                    -
+                  </button>
+                  <p className=" text-center h-8 w-6 text-xl border-black">
+                    {quantities[product._id] || 1}
+                  </p>
+                  <button
+                    className=" px-2 border border-black rounded-2xl text-2xl font-bold pb-1"
+                    onClick={() => {
+                      incre(product._id);
+                    }}
+                  >
+                    +
+                  </button>
                 </div>
-              ))
+                <div className="flex justify-center bg-teal-700 rounded-xl my-3 h-10">
+                  <button
+                    className="border border-black rounded-xl px-2 py-1 "
+                    onClick={(e) => {
+                      e.preventDefault();
+                      AddtoCart({
+                        User: user?._id,
+                        Product: product._id,
+                        quantity: quantities[product._id] || 1,
+                      });
+                    }}
+                  >
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+            ))
           )}
         </div>
       </div>
-      <footer>Footer </footer>
     </div>
   );
 }
