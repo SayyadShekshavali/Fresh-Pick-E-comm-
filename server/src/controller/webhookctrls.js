@@ -1,7 +1,7 @@
 import Stripe from "stripe";
 import dotenv from "dotenv";
 dotenv.config();
-const stripe = new Stripe(process.env.SECRET_KEY);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 export const stripewebhook = async (req, res) => {
   const sig = req.headers["stripe-signature"];
   let event;

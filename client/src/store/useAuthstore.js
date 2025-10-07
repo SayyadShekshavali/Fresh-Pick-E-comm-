@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import axios from "axios";
 import toast from "react-hot-toast";
-
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 axios.defaults.withCredentials = true;
 
 export const useAuthStore = create(
@@ -19,9 +19,7 @@ export const useAuthStore = create(
 
       checkAuth: async () => {
         try {
-          const res = await axios.get(
-            `${import.meta.env.VITE_API_URL}/auth/check`
-          );
+          const res = await axios.get(`${API_URL}/auth/check`);
 
           set({ user: res.data });
         } catch (error) {
@@ -36,7 +34,7 @@ export const useAuthStore = create(
         set({ isSigningUp: true });
         try {
           const res = await axios.post(
-            `${import.meta.env.VITE_API_URL}/auth/signup`,
+            `${API_URL}/auth/signup`,
             {
               email,
               password,
@@ -64,7 +62,7 @@ export const useAuthStore = create(
         set({ isLoggingIn: true });
         try {
           const res = await axios.post(
-            `${import.meta.env.VITE_API_URL}/auth/login`,
+            `${API_URL}/auth/login`,
             {
               email,
               password,

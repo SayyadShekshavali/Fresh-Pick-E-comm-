@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 import axios from "axios";
 import toast from "react-hot-toast";
-
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 axios.defaults.withCredentials = true;
 export const useProductStore = create((set) => ({
   products: [],
@@ -11,9 +11,7 @@ export const useProductStore = create((set) => ({
   fetchProducts: async () => {
     set({ isLoading: true });
     try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/product/fetchall`
-      );
+      const res = await axios.get(`${API_URL}/product/fetchall`);
       set({ products: res.data ?? [] });
       console.log("Fetched products:", res.data);
     } catch (err) {
@@ -27,9 +25,7 @@ export const useProductStore = create((set) => ({
     set({ isLoading: true });
     console.log(type);
     try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/product/fetchbytype/${type}`
-      );
+      const res = await axios.get(`${API_URL}/product/fetchbytype/${type}`);
       set({ products: res.data.products, isLoading: false });
       console.log(res.data);
       toast.success("Fetched Based on the type");
