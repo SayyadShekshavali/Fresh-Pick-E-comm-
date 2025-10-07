@@ -12,7 +12,10 @@ export const CartStore = create(() => ({
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}/cart/add`,
-        Data
+        Data,
+        {
+          withCredentials: true,
+        }
       );
       toast.success("Item Added to Cart");
       return res;
